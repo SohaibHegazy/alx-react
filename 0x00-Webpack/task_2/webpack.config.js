@@ -1,10 +1,8 @@
-const path = require('path');
-
 module.exports = {
   entry: './js/dashboard_main.js',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'public')
+    path: path.resolve(__dirname, 'public'),
   },
   module: {
     rules: [
@@ -14,8 +12,15 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|jpeg|gif)$/i,
-        type: 'file-loader',
+        type: 'asset/resource',
         use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'images/',
+            },
+          },
           {
             loader: 'image-webpack-loader',
             options: {
@@ -43,8 +48,5 @@ module.exports = {
     ]
   },
   mode: 'production',
-  performance: {
-    maxAssetSize: 1000000, // Set asset size limit to 1MB to prevent size warnings
-  }
 };
 
